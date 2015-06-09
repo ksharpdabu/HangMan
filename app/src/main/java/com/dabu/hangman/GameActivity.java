@@ -32,7 +32,11 @@ public class GameActivity extends ActionBarActivity {
         Log.d("myletter", "the letter is " + letter);
     }
 
-
+    /**
+     * Checking if the leter introduced matchs any letter in the word
+     *
+     * @param introducedLetter
+     */
     public  void checkLetter(String introducedLetter){
 
         char charIntroduced = introducedLetter.charAt(0);
