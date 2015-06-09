@@ -1,5 +1,6 @@
 package com.dabu.hangman;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -128,7 +129,8 @@ public class GameActivity extends ActionBarActivity {
         }else if (faidCounter == 5) {
             imageView.setImageResource(R.drawable.hangman_5);
         }else if (faidCounter == 6) {
-            imageView.setImageResource(R.drawable.game_over);
+            Intent gameover = new Intent(this, GameOverActivity.class);
+            startActivity(gameover);
         }
 
 
