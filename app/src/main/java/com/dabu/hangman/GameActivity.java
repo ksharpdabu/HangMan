@@ -7,11 +7,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 
 public class GameActivity extends ActionBarActivity {
 
     String mword = "work";
+    int faidCounter = 0;
+    int mGuessedLetter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +36,11 @@ public class GameActivity extends ActionBarActivity {
 
         String letter = myEditText.getText().toString();
 
+        myEditText.setText("");
+
         Log.d("myletter", "the letter is " + letter);
+
+        checkLetter(letter);
     }
 
     /**
@@ -41,19 +52,102 @@ public class GameActivity extends ActionBarActivity {
 
         char charIntroduced = introducedLetter.charAt(0);
 
+        boolean letterGuessed = false;
+
         for (int i = 0; i < mword.length() ; i++) {
             char charFromWord = mword.charAt(i);
             Log.d("mylog","there letter we check is  "+charFromWord);
-            if( charFromWord == charFromWord ) {
+            if( charFromWord == charIntroduced ) {
                 Log.d("mylog","there was one match  ");
+
+                showGuessLetter(i , charIntroduced);
+
+                letterGuessed = true;
+
+                mGuessedLetter++;
             }
 
+
+        }
+
+
+        if(letterGuessed == false) {
+
+
+            letterFail(Character.toString(charIntroduced));
+
+        }
+
+        if(mGuessedLetter == mword.length()) {
+            cleanScreen();
         }
     }
 
 
+    public void cleanScreen() {
+        TextView textViewFailed = (TextView) findViewById(R.id.textView6);
+
+        textViewFailed.setText("");
+
+        mGuessedLetter = 0;
+
+        faidCounter = 0;
+
+        LinearLayout layoutLetter = (LinearLayout) findViewById(R.id.layoutLetters);
 
 
+        for (int i = 0; i < layoutLetter.getChildCount(); i++) {
+            TextView textView = (TextView) layoutLetter.getChildAt(i);
+            textView.setText("_");
+        }
+
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        imageView.setImageResource(R.drawable.hangman_0);
+
+
+    }
+
+    public void letterFail(String letterFailed){
+
+        TextView textViewFailed = (TextView) findViewById(R.id.textView6);
+
+        String previousFailded = textViewFailed.getText().toString();
+        textViewFailed.setText(previousFailded+letterFailed);
+
+        faidCounter++;
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+
+        if( faidCounter == 1) {
+            imageView.setImageResource(R.drawable.hangman_1);
+        }else if (faidCounter == 2) {
+            imageView.setImageResource(R.drawable.hangman_2);
+        }else if (faidCounter == 3) {
+            imageView.setImageResource(R.drawable.hangman_3);
+        }else if (faidCounter == 4) {
+            imageView.setImageResource(R.drawable.hangman_4);
+        }else if (faidCounter == 5) {
+            imageView.setImageResource(R.drawable.hangman_5);
+        }else if (faidCounter == 6) {
+            imageView.setImageResource(R.drawable.game_over);
+        }
+
+
+
+    }
+
+
+    /**
+     * display letter guessed by user
+     *
+     * @param position of letter
+     * @param letterGuessed
+     */
+    public void showGuessLetter(int position , char letterGuessed) {
+        LinearLayout layoutLetter = (LinearLayout) findViewById(R.id.layoutLetters);
+
+        TextView textView = (TextView) layoutLetter.getChildAt( position);
+        textView.setText(Character.toString(letterGuessed));
+    }
 
 
 
