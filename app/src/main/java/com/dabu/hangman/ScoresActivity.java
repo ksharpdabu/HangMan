@@ -1,41 +1,35 @@
 package com.dabu.hangman;
 
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
+import android.widget.TextView;
 
 
-public class MultiplayerActivity extends ActionBarActivity {
+public class ScoresActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_multiplayer);
+        setContentView(R.layout.activity_scores);
+
+        SharedPreferences preferences = getSharedPreferences("mypreferences", Context.MODE_PRIVATE);
+
+        String scores = preferences.getString("Scores","No scores");
+
+        TextView textViewScores = (TextView)findViewById(R.id.textViewScores);
+
+        textViewScores.setText(scores);
+
     }
-
-
-    public void startMultiGame(View v) {
-
-        EditText editText = (EditText)findViewById(R.id.editTextWord);
-        String wordToguess = editText.getText().toString();
-
-        editText.setText("");
-
-        Intent intent = new Intent(this,GameMultiActivity.class);
-        intent.putExtra("word",wordToguess);
-        startActivity(intent);
-        finish();
-    }
-
 
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_multiplayer, menu);
+//        getMenuInflater().inflate(R.menu.menu_scores, menu);
 //        return true;
 //    }
 //

@@ -1,13 +1,20 @@
 package com.dabu.hangman;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 
 public class GameOverActivity extends ActionBarActivity {
+
+    int mpoints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,10 +22,40 @@ public class GameOverActivity extends ActionBarActivity {
         setContentView(R.layout.activity_game_over);
 
 
-        int points = getIntent().getIntExtra("points",0);
+        int points = getIntent().getIntExtra("points", 0);
+
+        mpoints = points;
+
 
         TextView mtextView = (TextView) findViewById(R.id.textPoint);
         mtextView.setText(String.valueOf(points));
+
+
+
+
+
+
+    }
+
+    public void saveScores(View v) {
+
+        SharedPreferences preferences = getSharedPreferences("mypreferences",Context.MODE_PRIVATE);
+        EditText editTextName = (EditText)findViewById(R.id.editTextName);
+        String name = editTextName.getText().toString();
+
+        SharedPreferences.Editor editor = preferences.edit();
+
+        String previousScores = preferences.getString("Scores","");
+
+        editor.putString("Scores", name + "  " + mpoints + "  points \n"+previousScores);
+        editor.commit();
+
+        finish();
+
+//        Intent intent = new Intent(this,ScoresActivity.class);
+//        startActivity(intent);
+
+
     }
 
 

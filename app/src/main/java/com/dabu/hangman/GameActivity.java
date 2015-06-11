@@ -11,22 +11,25 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
 
 public class GameActivity extends ActionBarActivity {
 
-    String mword = "work";
+    String mword = "AITU";
     int mfaidCounter = 0;
     int mGuessedLetter = 0;
     int mPoint = 0;
+    char letterreplace ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        setRandomWord();
+//        setRandomWord();
     }
 
     /**
@@ -43,7 +46,17 @@ public class GameActivity extends ActionBarActivity {
 
         Log.d("myletter", "the letter is " + letter);
 
-        checkLetter(letter);
+
+        if(letter.equals("")) {
+            Toast.makeText(this,"please input a letter",Toast.LENGTH_LONG).show();
+        }else{
+
+            checkLetter(letter);
+        }
+
+
+
+
     }
 
     /**
@@ -63,11 +76,16 @@ public class GameActivity extends ActionBarActivity {
             if( charFromWord == charIntroduced ) {
                 Log.d("mylog","there was one match  ");
 
-                showGuessLetter(i , charIntroduced);
+                showGuessLetter(i, charIntroduced);
 
                 letterGuessed = true;
 
                 mGuessedLetter++;
+
+                letterreplace = charIntroduced;
+
+
+
             }
 
 
@@ -78,6 +96,11 @@ public class GameActivity extends ActionBarActivity {
 
 
             letterFail(Character.toString(charIntroduced));
+
+        }else {
+            mword = mword.replace(String.valueOf(letterreplace)," ");
+
+            Log.e("replace",mword);
 
         }
 
@@ -152,6 +175,8 @@ public class GameActivity extends ActionBarActivity {
 
             gameover.putExtra("points", mPoint);
             startActivity(gameover);
+
+            finish();
         }
 
 

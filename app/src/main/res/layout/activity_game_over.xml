@@ -31,12 +31,12 @@
             android:id="@+id/button4"
 
             android:layout_marginRight="40dp"
-            android:onClick="introduceLetter" />
+            android:onClick="saveScores" />
 
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editTextLetter"
+            android:id="@+id/editTextName"
 
 
             android:layout_marginLeft="20dp"

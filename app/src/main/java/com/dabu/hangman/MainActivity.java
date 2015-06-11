@@ -31,6 +31,12 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
+
+    public void oepnScores(View v) {
+        Intent intent = new Intent(this , ScoresActivity.class);
+        startActivity(intent);
+    }
+
     public int multiplyNum(int num1 ,int num2){
         int result = num1+num2;
         return result;
