@@ -6,43 +6,32 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 
-public class MainActivity extends ActionBarActivity {
-
-
-
+public class MultiplayerActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
-
-    public void startSinglePlayerGame(View v) {
-
-        Intent intent = new Intent(this , GameActivity.class);
-        startActivity(intent);
+        setContentView(R.layout.activity_multiplayer);
     }
 
 
     public void startMultiGame(View v) {
-        Intent intent = new Intent(this , MultiplayerActivity.class);
+
+        EditText editText = (EditText)findViewById(R.id.editTextWord);
+        String wordToguess = editText.getText().toString();
+        Intent intent = new Intent(this,MultiplayerActivity.class);
+        intent.putExtra("word",wordToguess);
         startActivity(intent);
     }
-
-    public int multiplyNum(int num1 ,int num2){
-        int result = num1+num2;
-        return result;
-    }
-
-
 
 
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        getMenuInflater().inflate(R.menu.menu_multiplayer, menu);
 //        return true;
 //    }
 //
