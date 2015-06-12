@@ -52,4 +52,5 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textColor="@color/green_main" />
+
 </RelativeLayout>

@@ -22,7 +22,12 @@ public class MainActivity extends ActionBarActivity {
     public void startSinglePlayerGame(View v) {
 
         Intent intent = new Intent(this , GameActivity.class);
+
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        overridePendingTransition (0, 0);
     }
 
 
