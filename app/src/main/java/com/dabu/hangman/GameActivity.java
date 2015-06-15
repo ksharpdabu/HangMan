@@ -13,6 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import org.w3c.dom.Text;
 
 
@@ -22,7 +25,7 @@ public class GameActivity extends ActionBarActivity {
     int mfaidCounter = 0;
     int mGuessedLetter = 0;
     int mPoint = 0;
-    char letterreplace ;
+    char letterreplace;
 
 
     @Override
@@ -30,6 +33,10 @@ public class GameActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         setRandomWord();
+
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     /**
@@ -47,14 +54,12 @@ public class GameActivity extends ActionBarActivity {
         Log.d("myletter", "the letter is " + letter);
 
 
-        if(letter.equals("")) {
-            Toast.makeText(this,"please input a letter",Toast.LENGTH_LONG).show();
-        }else{
+        if (letter.equals("")) {
+            Toast.makeText(this, "please input a letter", Toast.LENGTH_LONG).show();
+        } else {
 
             checkLetter(letter);
         }
-
-
 
 
     }
@@ -64,17 +69,17 @@ public class GameActivity extends ActionBarActivity {
      *
      * @param introducedLetter
      */
-    public  void checkLetter(String introducedLetter){
+    public void checkLetter(String introducedLetter) {
 
         char charIntroduced = introducedLetter.charAt(0);
 
         boolean letterGuessed = false;
 
-        for (int i = 0; i < mword.length() ; i++) {
+        for (int i = 0; i < mword.length(); i++) {
             char charFromWord = mword.charAt(i);
-            Log.d("mylog","there letter we check is  "+charFromWord);
-            if( charFromWord == charIntroduced ) {
-                Log.d("mylog","there was one match  ");
+            Log.d("mylog", "there letter we check is  " + charFromWord);
+            if (charFromWord == charIntroduced) {
+                Log.d("mylog", "there was one match  ");
 
                 showGuessLetter(i, charIntroduced);
 
@@ -85,32 +90,30 @@ public class GameActivity extends ActionBarActivity {
                 letterreplace = charIntroduced;
 
 
-
             }
 
 
         }
 
 
-        if(letterGuessed == false) {
+        if (letterGuessed == false) {
 
 
             letterFail(Character.toString(charIntroduced));
 
-        }else {
-            mword = mword.replace(String.valueOf(letterreplace)," ");
+        } else {
+            mword = mword.replace(String.valueOf(letterreplace), " ");
 
-            Log.e("replace",mword);
+            Log.e("replace", mword);
 
         }
 
-        if(mGuessedLetter == mword.length()) {
+        if (mGuessedLetter == mword.length()) {
             mPoint++;
             cleanScreen();
             setRandomWord();
         }
     }
-
 
 
     public void setRandomWord() {
@@ -150,27 +153,27 @@ public class GameActivity extends ActionBarActivity {
 
     }
 
-    public void letterFail(String letterFailed){
+    public void letterFail(String letterFailed) {
 
         TextView textViewFailed = (TextView) findViewById(R.id.textView6);
 
         String previousFailded = textViewFailed.getText().toString();
-        textViewFailed.setText(previousFailded+letterFailed);
+        textViewFailed.setText(previousFailded + letterFailed);
 
         mfaidCounter++;
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
 
-        if( mfaidCounter == 1) {
+        if (mfaidCounter == 1) {
             imageView.setImageResource(R.drawable.hangman_1);
-        }else if (mfaidCounter == 2) {
+        } else if (mfaidCounter == 2) {
             imageView.setImageResource(R.drawable.hangman_2);
-        }else if (mfaidCounter == 3) {
+        } else if (mfaidCounter == 3) {
             imageView.setImageResource(R.drawable.hangman_3);
-        }else if (mfaidCounter == 4) {
+        } else if (mfaidCounter == 4) {
             imageView.setImageResource(R.drawable.hangman_4);
-        }else if (mfaidCounter == 5) {
+        } else if (mfaidCounter == 5) {
             imageView.setImageResource(R.drawable.hangman_5);
-        }else if (mfaidCounter == 6) {
+        } else if (mfaidCounter == 6) {
             Intent gameover = new Intent(this, GameOverActivity.class);
 
             gameover.putExtra("points", mPoint);
@@ -180,24 +183,21 @@ public class GameActivity extends ActionBarActivity {
         }
 
 
-
     }
 
 
     /**
      * display letter guessed by user
      *
-     * @param position of letter
+     * @param position      of letter
      * @param letterGuessed
      */
-    public void showGuessLetter(int position , char letterGuessed) {
+    public void showGuessLetter(int position, char letterGuessed) {
         LinearLayout layoutLetter = (LinearLayout) findViewById(R.id.layoutLetters);
 
-        TextView textView = (TextView) layoutLetter.getChildAt( position);
+        TextView textView = (TextView) layoutLetter.getChildAt(position);
         textView.setText(Character.toString(letterGuessed));
     }
-
-
 
 
 //
@@ -223,3 +223,5 @@ public class GameActivity extends ActionBarActivity {
 //        return super.onOptionsItemSelected(item);
 //    }
 }
+
+
